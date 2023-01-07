@@ -7,8 +7,8 @@
 #include <avr/io.h>
 
 void init_ports(void){
-	//Sensor ultrasonico
-	DDRB |= (1 << PB0);			//PB0 Salida activa para Trigger
+	//Ultrasonic sensor
+	DDRB |= (1 << PB0);			//PB0 Enable output for trigger
 	PORTB &= (0 << PB0);		//Clear Output
 	DDRD &= 0 << PD2;			//Input for echo on external interrupt
 	PORTD |= (1 << PB1);		//Activate PullUp Resistor

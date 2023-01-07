@@ -6,11 +6,13 @@
  */ 
 #include <avr/io.h>
 #include <util/delay.h>
+#include "us_sensor.h"
 
 void power_on(void){
 	int i;
-	for (i=0;i<6;i++){
+	for(i=0;i<5;i++){
 		PORTB ^= 1 << PB5;
-		_delay_ms(100);
+		_delay_ms(500);
 	}
 }
+

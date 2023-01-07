@@ -93,6 +93,7 @@
         <avrgcc.compiler.symbols.DefSymbols>
           <ListValues>
             <Value>DEBUG</Value>
+            <Value>F_CPU=16000000</Value>
           </ListValues>
         </avrgcc.compiler.symbols.DefSymbols>
         <avrgcc.compiler.directories.IncludePaths>
@@ -120,6 +121,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ir_sensor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ir_sensor.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="leds.c">
       <SubType>compile</SubType>
     </Compile>
@@ -127,6 +134,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="motors.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="motors.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="ports.c">

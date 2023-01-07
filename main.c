@@ -11,10 +11,21 @@
 #include "leds.h"
 #include "ports.h"
 #include "us_sensor.h"
+#include "motors.h"
+#include "ir_sensor.h"
 
-int main(void){
-	init_ports();
-	power_on();
+int object_presence=0;
+
+int main(){
+	
+	init_ports(); 
+	init_irSensor();//Initialize all ports needed in the system
+	power_on();				//Turn on the L led, it will count to five until the fights starts 
+	init_ext_int0();
+	init_timer0();			//initialize the timer in INT1
+	init_timer1();
+	example_sonar();
+	
 	
 	
 }
