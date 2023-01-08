@@ -15,6 +15,8 @@ volatile long result = 0;				//echo canceling time between sampling
 volatile unsigned char up=0;			
 volatile unsigned char running = 0;
 volatile uint32_t timerCounter = 0;
+volatile int us_presence = 0;
+volatile float distance = 0;
 
 //timer overflow interrupt, each time when timer value passes 255 value
 SIGNAL(TIMER0_OVF_vect){
@@ -44,7 +46,8 @@ ISR(INT0_vect){
 			//voltage drop, stop time measurement
 			up=0;
 			//d = [time_s*340m/s]/2=time_us/58
-			result =(timerCounter*256+TCNT0)/258;
+			result =(timerCounter*256+TCNT0)/58;
+			distance = result/58;
 			running=0;
 		}
 	}
@@ -82,3 +85,9 @@ void example_sonar(void){
 		}
 	}
 }
+
+float get_distance(void){
+	distance=result;
+	return distance;
+}
+

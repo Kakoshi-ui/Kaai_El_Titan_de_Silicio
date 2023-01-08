@@ -12,5 +12,7 @@
 void init_ext_int0(void);
 void init_timer0(void);
 void example_sonar(void);
+void led_probe(void);
+float get_distance(void);
 
 #endif /* US_SENSOR_H_ */

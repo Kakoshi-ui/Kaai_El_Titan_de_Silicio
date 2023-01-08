@@ -8,6 +8,10 @@
 
 #ifndef IR_SENSOR_H_
 #define IR_SENSOR_H_
+
 void init_irSensor(void);
 int det_bline(void);
+int left_border_out(void);
+int right_border_out(void);
+
 #endif /* IR_SENSOR_H_ */

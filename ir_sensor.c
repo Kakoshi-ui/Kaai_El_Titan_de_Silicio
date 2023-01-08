@@ -11,7 +11,7 @@ volatile int irs1 = 0;
 volatile int irs2 = 0;
 volatile int irs3 = 0;
 volatile int irs4 = 0;
-int ir_detect=0;
+volatile int ir_detect=0;
 
 void init_irSensor(void){
 	DDRD &= (0 << PD3) & (0 << PD4);
@@ -24,10 +24,22 @@ int det_bline(void){
 	irs3=PIND5;
 	irs4=PIND6;
 	if (irs1 == 0 || irs2 == 0 || irs3 == 0 || irs4==0){
-		ir_detect=1;
-	}
-	else {
 		ir_detect=0;
 	}
+	else {
+		ir_detect=1;
+	}
 	return ir_detect;
+}
+
+int left_border_out (void){
+	if (irs1 == 1){
+		return 1;
+	}
+}
+
+int right_border_out (void){
+	if (irs4 == 1){
+		return 1;
+	}
 }
