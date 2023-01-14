@@ -76,12 +76,13 @@ void init_timer0(void){
 	sei();					//enable all(global)interrupts
 }
 
-void example_sonar(void){
-	for(;;){		
-		if(running==0){		//launch only when next iteration can happen
+void example_sonar(void){	
+		for(;;){
+		if(running == 0){		//launch only when next iteration can happen
 			//create a delay between tests, to compensate for old echoes
 			_delay_ms(DELAY_BETWEEN_TESTS_MS);
 			send_trigger();
+			break;
 		}
 	}
 }

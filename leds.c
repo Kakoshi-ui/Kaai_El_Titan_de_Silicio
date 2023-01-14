@@ -8,11 +8,10 @@
 #include <util/delay.h>
 #include "us_sensor.h"
 
-volatile int us_detect=0;
 
 void power_on(void){
 	int i;
-	for(i=0;i<10;i++){
+	for(i=0;i<4;i++){
 		PORTB ^= 1 << PB5;
 		_delay_ms(500);
 	}
