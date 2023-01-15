@@ -16,3 +16,7 @@ void power_on(void){
 		_delay_ms(500);
 	}
 }
+
+void led_on(void){
+	PORTB |= 1 << PB5;
+}

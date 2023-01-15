@@ -9,4 +9,5 @@
 #ifndef LEDS_H_
 #define LEDS_H_
 void power_on(void);
+void led_on(void);
 #endif /* LEDS_H_ */

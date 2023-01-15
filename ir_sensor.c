@@ -5,41 +5,31 @@
  *  Author: axel9
  */ 
 #include <avr/io.h>
-#include <util/delay.h>
+#include "adc.h"
+#include "ir_sensor.h"
+uint16_t ir_sensor1, ir_sensor4; // using two ir_sensors to detect border line
+uint8_t sensor1, sensor4;		 // where sensor1 is the right side sensor & sensor4 is the left side sensor
+								 // from H bridge side view
+int read_rightSensor(void){
+	
+	ir_sensor1 = read_adc(SENSOR1);
+	if (ir_sensor1 > SENSOR_THRESH){
+		sensor1 = 0;
+	}
+	else if(ir_sensor1 < SENSOR_THRESH){
+		sensor1 = 1;
+	}
+	return sensor1;
 
-volatile int irs1 = 0;
-volatile int irs2 = 0;
-volatile int irs3 = 0;
-volatile int irs4 = 0;
-volatile int ir_detect=0;
-
-void init_irSensor(void){
-	DDRD &= (0 << PD3) & (0 << PD4);
-	DDRD &= (0 << PD5) & (0 << PD6);
 }
 
-int det_bline(void){
-	irs1=PIND3;
-	irs2=PIND4;
-	irs3=PIND5;
-	irs4=PIND6;
-	if (irs1 == 0 || irs2 == 0 || irs3 == 0 || irs4==0){
-		ir_detect=0;
+int read_leftSensor(void){
+	ir_sensor4 = read_adc(SENSOR4);
+	if (ir_sensor4 > SENSOR_THRESH){
+		sensor4 = 0;
 	}
-	else {
-		ir_detect=1;
+	else if(ir_sensor4 < SENSOR_THRESH){
+		sensor4 = 1;
 	}
-	return ir_detect;
-}
-
-int left_border_out (void){
-	if (irs1 == 1){
-		return 1;
-	}
-}
-
-int right_border_out (void){
-	if (irs4 == 1){
-		return 1;
-	}
+	return sensor4;
 }

@@ -37,6 +37,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../adc.c \
 ../ir_sensor.c \
 ../leds.c \
 ../main.c \
@@ -52,6 +53,7 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+adc.o \
 ir_sensor.o \
 leds.o \
 main.o \
@@ -60,6 +62,7 @@ ports.o \
 us_sensor.o
 
 OBJS_AS_ARGS +=  \
+adc.o \
 ir_sensor.o \
 leds.o \
 main.o \
@@ -68,6 +71,7 @@ ports.o \
 us_sensor.o
 
 C_DEPS +=  \
+adc.d \
 ir_sensor.d \
 leds.d \
 main.d \
@@ -76,6 +80,7 @@ ports.d \
 us_sensor.d
 
 C_DEPS_AS_ARGS +=  \
+adc.d \
 ir_sensor.d \
 leds.d \
 main.d \
@@ -97,6 +102,13 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+./adc.o: .././adc.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 ./ir_sensor.o: .././ir_sensor.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0

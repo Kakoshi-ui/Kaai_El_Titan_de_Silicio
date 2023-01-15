@@ -13,9 +13,27 @@
 #include "us_sensor.h"
 #include "motors.h"
 #include "ir_sensor.h"
+#include "adc.h"
 
 int main(){
+	
 	init_ports();
+	power_on();
+	init_timer1();
+	adc_init();
+	
+	while(1){
+		led_on();
+		if(read_rightSensor() == 1 || read_leftSensor() == 1){
+			motor_right(motor_forward,50);
+			motor_left(motor_forward,50);
+		}
+		else{
+			motor_right(motor_backward,50);
+			motor_left(motor_backward,50);
+		}
+	}
+	/*init_ports();
 	power_on();
 	init_timer1();
 	
@@ -37,5 +55,5 @@ int main(){
 			motor_left(motor_stop,0);
 			motor_right(motor_stop,0);
 		}
-	}
+	}*/
 }
