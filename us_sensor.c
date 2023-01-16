@@ -42,6 +42,7 @@ ISR(INT0_vect)
 			//d = [ time_s * 340m/s ] / 2 = time_us/58
 			result = (timerCounter * 256 + TCNT0) / 58;
 			running = 0;
+			
 		}
 	}
 }

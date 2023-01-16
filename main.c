@@ -16,27 +16,9 @@
 #include "adc.h"
 
 // Global variables
-float us_distance = 0.0;
+volatile float us_distance = 0.0;
 
-void no_opponent(void){
-	while(us_distance > 0.30){
-		motor_right(motor_forward,100);
-		motor_left(motor_stop,0);
-		_delay_ms(1000);
-		
-		motor_right(motor_backward,100);
-		_delay_ms(1000);
-		
-		motor_left(motor_forward,100);
-		motor_right(motor_stop,0);
-		_delay_ms(1000);
-		
-		motor_left(motor_backward,100);
-		_delay_ms(1000);
-		us_distance = get_distance();
-	}
-}
-
+void turn_back(void);
 
 int main(){
 	
@@ -55,18 +37,35 @@ int main(){
 		
 		if(read_rightSensor() == 0 && read_leftSensor() == 0){
 			us_distance = get_distance();
-			if (us_distance > 0.30){
+			if (us_distance > 50){
 				motor_left(motor_forward,254);
 				motor_right(motor_forward,254);
 			}
-			else if(us_distance < 0.30){
+			else if(us_distance < 50){
 				motor_left(motor_stop,0);
-				motor_right(motor_stop,0);
+				motor_right(motor_forward,100);
 			}
 		}
-		else{
-			motor_right(motor_backward,50);
-			motor_left(motor_backward,50);
+		else if (read_rightSensor() == 1 || read_leftSensor() == 1){
+			turn_back();
 		}
 	}
+}
+
+void turn_back(void){
+	motor_right(motor_stop,0);
+	motor_left(motor_stop,0);
+	_delay_ms(500);
+	
+	motor_left(motor_backward,100);
+	motor_right(motor_backward,100);
+	_delay_ms(2500);
+	
+	motor_right(motor_stop,0);
+	motor_left(motor_backward,250);
+	_delay_ms(2500);
+	
+	motor_left(motor_stop,0);
+	motor_right(motor_forward,250);
+	_delay_ms(2500);
 }
