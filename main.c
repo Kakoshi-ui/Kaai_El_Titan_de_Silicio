@@ -15,45 +15,58 @@
 #include "ir_sensor.h"
 #include "adc.h"
 
+// Global variables
+float us_distance = 0.0;
+
+void no_opponent(void){
+	while(us_distance > 0.30){
+		motor_right(motor_forward,100);
+		motor_left(motor_stop,0);
+		_delay_ms(1000);
+		
+		motor_right(motor_backward,100);
+		_delay_ms(1000);
+		
+		motor_left(motor_forward,100);
+		motor_right(motor_stop,0);
+		_delay_ms(1000);
+		
+		motor_left(motor_backward,100);
+		_delay_ms(1000);
+		us_distance = get_distance();
+	}
+}
+
+
 int main(){
 	
 	init_ports();
 	power_on();
 	init_timer1();
+	
 	adc_init();
 	
+	init_ext_int0();
+	init_timer0();
+	
 	while(1){
-		led_on();
-		if(read_rightSensor() == 1 || read_leftSensor() == 1){
-			motor_right(motor_forward,50);
-			motor_left(motor_forward,50);
+		PORTB |= 1 << PB5;
+		example_sonar();
+		
+		if(read_rightSensor() == 0 && read_leftSensor() == 0){
+			us_distance = get_distance();
+			if (us_distance > 0.30){
+				motor_left(motor_forward,254);
+				motor_right(motor_forward,254);
+			}
+			else if(us_distance < 0.30){
+				motor_left(motor_stop,0);
+				motor_right(motor_stop,0);
+			}
 		}
 		else{
 			motor_right(motor_backward,50);
 			motor_left(motor_backward,50);
 		}
 	}
-	/*init_ports();
-	power_on();
-	init_timer1();
-	
-	motor_left(motor_stop,0);
-	motor_right(motor_stop,0);
-	
-	init_ext_int0();
-	init_timer0();
-	
-	while (1){
-		example_sonar();
-		if(get_distance() >= 0.10){
-			PORTB |= 1 << PB5;
-			motor_left(motor_forward,250);
-			motor_right(motor_forward,250);
-		}
-		else{
-			PORTB &= 0 << PB5;
-			motor_left(motor_stop,0);
-			motor_right(motor_stop,0);
-		}
-	}*/
 }

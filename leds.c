@@ -11,12 +11,9 @@
 
 void power_on(void){
 	int i;
-	for(i=0;i<4;i++){
+	for(i=0;i<10;i++){
 		PORTB ^= 1 << PB5;
 		_delay_ms(500);
 	}
 }
 
-void led_on(void){
-	PORTB |= 1 << PB5;
-}
